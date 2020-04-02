@@ -1,0 +1,67 @@
+Dependencies for Project 'FormPal', Target 'FormPalMain': (DO NOT MODIFY !)
+CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
+F (.\startup_rvmdk.S)(0x5E5A0514)(--cpu Cortex-M4.fp.sp --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123--pd "__UVISION_VERSION SETA 529"--list .\listings\startup_rvmdk.lst --xref -o .\objects\startup_rvmdk.o --depend .\objects\startup_rvmdk.d)
+F (..\..\ek-tm4c123gxl-boostxl-senshub\drivers\rgb.c)(0x5E84CEA1)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .. -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="529" -Drvmdk -DPART_TM4C123GH6PM -DTARGET_IS_TM4C123_RB1 -DUART_BUFFERED -DTM4C123GH6PM-o .\objects\rgb.o --omf_browse .\objects\rgb.crf --depend .\objects\rgb.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9BA508)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9BA508)
+I (..\..\..\..\inc/hw_types.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_memmap.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_timer.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_ints.h)(0x5E84CEA2)
+I (..\..\..\..\driverlib/sysctl.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/rom.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/rom_map.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/pin_map.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/timer.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/gpio.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/interrupt.h)(0x5E84CE9E)
+I (..\..\ek-tm4c123gxl-boostxl-senshub\drivers\rgb.h)(0x5E84CEA1)
+F (..\..\..\..\utils\uartstdio.c)(0x5E84CEA7)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .. -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="529" -Drvmdk -DPART_TM4C123GH6PM -DTARGET_IS_TM4C123_RB1 -DUART_BUFFERED -DTM4C123GH6PM-o .\objects\uartstdio.o --omf_browse .\objects\uartstdio.crf --depend .\objects\uartstdio.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9BA508)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9BA508)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9BA50A)
+I (..\..\..\..\inc/hw_ints.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_memmap.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_types.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_uart.h)(0x5E84CEA2)
+I (..\..\..\..\driverlib/debug.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/interrupt.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/rom.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/rom_map.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/sysctl.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/uart.h)(0x5E84CE9E)
+I (..\..\..\..\utils/uartstdio.h)(0x5E84CEA7)
+F (.\FormPal.c)(0x5E865C14)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .. -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="529" -Drvmdk -DPART_TM4C123GH6PM -DTARGET_IS_TM4C123_RB1 -DUART_BUFFERED -DTM4C123GH6PM-o .\objects\formpal.o --omf_browse .\objects\formpal.crf --depend .\objects\formpal.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9BA508)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9BA508)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5D9BA502)
+I (..\..\..\..\inc/hw_memmap.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_ints.h)(0x5E84CEA2)
+I (..\..\..\..\driverlib/debug.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/gpio.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/interrupt.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/pin_map.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/rom.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/sysctl.h)(0x5E84CE9E)
+I (..\..\..\..\driverlib/uart.h)(0x5E84CE9E)
+I (..\..\..\..\utils/uartstdio.h)(0x5E84CEA7)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9BA50A)
+I (..\..\..\..\sensorlib/hw_mpu9150.h)(0x5E84CEA2)
+I (..\..\..\..\sensorlib/i2cm_drv.h)(0x5E84CEA2)
+I (..\..\..\..\sensorlib/ak8975.h)(0x5E84CEA2)
+I (..\..\..\..\sensorlib/mpu9150.h)(0x5E84CEA3)
+I (..\..\..\..\sensorlib/comp_dcm.h)(0x5E84CEA2)
+I (..\drivers/rgb.h)(0x5E5A0514)
+I (..\drivers/buttons.h)(0x5E7BC254)
+I (..\drivers/buttons.c)(0x5E5A0514)
+I (..\..\..\..\inc/hw_types.h)(0x5E84CEA2)
+I (..\..\..\..\inc/hw_gpio.h)(0x5E84CEA2)
+I (..\..\..\..\driverlib/rom_map.h)(0x5E84CE9E)
+I (C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h)(0x559DB4B0)
+I (C:\Keil_v5\ARM\CMSIS\Include\core_cm4.h)(0x559DBE8A)
+I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x559DBE8A)
+I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x559DBE8A)
+I (C:\Keil_v5\ARM\CMSIS\Include\core_cm4_simd.h)(0x559DBE8A)
+I (C:\Keil_v5\ARM\INC\TI\TM4C123\system_TM4C123.h)(0x559DB4B0)
+F (..\..\..\..\driverlib\rvmdk\driverlib.lib)(0x5E84CE9E)()
+F (..\..\..\..\sensorlib\rvmdk\sensorlib.lib)(0x5E84CEA3)()

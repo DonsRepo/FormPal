@@ -1,0 +1,7 @@
+Dependencies for Project 'FormPal', Target 'FormPalMain': (DO NOT MODIFY !)
+F (.\startup_rvmdk.S)(0x5E5A1322)()
+F (..\..\ek-tm4c123gxl-boostxl-senshub\drivers\rgb.c)(0x5E5A1322)()
+F (..\..\..\..\utils\uartstdio.c)(0x5E5A1343)()
+F (.\FormPal.c)(0x5E7FD12D)()
+F (..\..\..\..\driverlib\rvmdk\driverlib.lib)(0x5E69590F)()
+F (..\..\..\..\sensorlib\rvmdk\sensorlib.lib)(0x5E695661)()

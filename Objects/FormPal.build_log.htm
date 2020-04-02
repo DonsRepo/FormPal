@@ -1,0 +1,158 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.29.0.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: asdf asdf, asdf, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.29.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.29.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      lmidk-agdi.dll V???
+Dialog DLL:      TCM.DLL V1.36.5.0
+ 
+<h2>Project:</h2>
+C:\ti\TivaWare_C_Series-2.1.4.178\examples\boards\my_projects\FormPal\FormPal.uvproj
+Project File Date:  04/01/2020
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'FormPalMain'
+assembling startup_rvmdk.S...
+compiling uartstdio.c...
+compiling rgb.c...
+compiling FormPal.c...
+C:\Keil_v5\ARM\CMSIS\Include\core_cm4.h(1392): warning:  #47-D: incompatible redefinition of macro "ITM_BASE"  (declared at line 145 of "..\..\..\..\inc/hw_memmap.h")
+  #define ITM_BASE            (0xE0000000UL)                            /*!< ITM Base Address                   */
+C:\Keil_v5\ARM\CMSIS\Include\core_cm4.h(1393): warning:  #47-D: incompatible redefinition of macro "DWT_BASE"  (declared at line 146 of "..\..\..\..\inc/hw_memmap.h")
+  #define DWT_BASE            (0xE0001000UL)                            /*!< DWT Base Address                   */
+C:\Keil_v5\ARM\CMSIS\Include\core_cm4.h(1397): warning:  #47-D: incompatible redefinition of macro "NVIC_BASE"  (declared at line 148 of "..\..\..\..\inc/hw_memmap.h")
+  #define NVIC_BASE           (SCS_BASE +  0x0100UL)                    /*!< NVIC Base Address                  */
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1543): warning:  #47-D: incompatible redefinition of macro "WATCHDOG0_BASE"  (declared at line 51 of "..\..\..\..\inc/hw_memmap.h")
+  #define WATCHDOG0_BASE                  0x40000000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1544): warning:  #47-D: incompatible redefinition of macro "WATCHDOG1_BASE"  (declared at line 52 of "..\..\..\..\inc/hw_memmap.h")
+  #define WATCHDOG1_BASE                  0x40001000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1549): warning:  #47-D: incompatible redefinition of macro "SSI0_BASE"  (declared at line 57 of "..\..\..\..\inc/hw_memmap.h")
+  #define SSI0_BASE                       0x40008000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1550): warning:  #47-D: incompatible redefinition of macro "SSI1_BASE"  (declared at line 58 of "..\..\..\..\inc/hw_memmap.h")
+  #define SSI1_BASE                       0x40009000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1551): warning:  #47-D: incompatible redefinition of macro "SSI2_BASE"  (declared at line 59 of "..\..\..\..\inc/hw_memmap.h")
+  #define SSI2_BASE                       0x4000A000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1552): warning:  #47-D: incompatible redefinition of macro "SSI3_BASE"  (declared at line 60 of "..\..\..\..\inc/hw_memmap.h")
+  #define SSI3_BASE                       0x4000B000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1553): warning:  #47-D: incompatible redefinition of macro "UART0_BASE"  (declared at line 61 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART0_BASE                      0x4000C000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1554): warning:  #47-D: incompatible redefinition of macro "UART1_BASE"  (declared at line 62 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART1_BASE                      0x4000D000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1555): warning:  #47-D: incompatible redefinition of macro "UART2_BASE"  (declared at line 63 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART2_BASE                      0x4000E000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1556): warning:  #47-D: incompatible redefinition of macro "UART3_BASE"  (declared at line 64 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART3_BASE                      0x4000F000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1557): warning:  #47-D: incompatible redefinition of macro "UART4_BASE"  (declared at line 65 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART4_BASE                      0x40010000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1558): warning:  #47-D: incompatible redefinition of macro "UART5_BASE"  (declared at line 66 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART5_BASE                      0x40011000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1559): warning:  #47-D: incompatible redefinition of macro "UART6_BASE"  (declared at line 67 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART6_BASE                      0x40012000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1560): warning:  #47-D: incompatible redefinition of macro "UART7_BASE"  (declared at line 68 of "..\..\..\..\inc/hw_memmap.h")
+  #define UART7_BASE                      0x40013000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1561): warning:  #47-D: incompatible redefinition of macro "I2C0_BASE"  (declared at line 69 of "..\..\..\..\inc/hw_memmap.h")
+  #define I2C0_BASE                       0x40020000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1562): warning:  #47-D: incompatible redefinition of macro "I2C1_BASE"  (declared at line 70 of "..\..\..\..\inc/hw_memmap.h")
+  #define I2C1_BASE                       0x40021000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1563): warning:  #47-D: incompatible redefinition of macro "I2C2_BASE"  (declared at line 71 of "..\..\..\..\inc/hw_memmap.h")
+  #define I2C2_BASE                       0x40022000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1564): warning:  #47-D: incompatible redefinition of macro "I2C3_BASE"  (declared at line 72 of "..\..\..\..\inc/hw_memmap.h")
+  #define I2C3_BASE                       0x40023000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1567): warning:  #47-D: incompatible redefinition of macro "PWM0_BASE"  (declared at line 77 of "..\..\..\..\inc/hw_memmap.h")
+  #define PWM0_BASE                       0x40028000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1568): warning:  #47-D: incompatible redefinition of macro "PWM1_BASE"  (declared at line 78 of "..\..\..\..\inc/hw_memmap.h")
+  #define PWM1_BASE                       0x40029000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1569): warning:  #47-D: incompatible redefinition of macro "QEI0_BASE"  (declared at line 79 of "..\..\..\..\inc/hw_memmap.h")
+  #define QEI0_BASE                       0x4002C000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1570): warning:  #47-D: incompatible redefinition of macro "QEI1_BASE"  (declared at line 80 of "..\..\..\..\inc/hw_memmap.h")
+  #define QEI1_BASE                       0x4002D000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1571): warning:  #47-D: incompatible redefinition of macro "TIMER0_BASE"  (declared at line 81 of "..\..\..\..\inc/hw_memmap.h")
+  #define TIMER0_BASE                     0x40030000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1572): warning:  #47-D: incompatible redefinition of macro "TIMER1_BASE"  (declared at line 82 of "..\..\..\..\inc/hw_memmap.h")
+  #define TIMER1_BASE                     0x40031000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1573): warning:  #47-D: incompatible redefinition of macro "TIMER2_BASE"  (declared at line 83 of "..\..\..\..\inc/hw_memmap.h")
+  #define TIMER2_BASE                     0x40032000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1574): warning:  #47-D: incompatible redefinition of macro "TIMER3_BASE"  (declared at line 84 of "..\..\..\..\inc/hw_memmap.h")
+  #define TIMER3_BASE                     0x40033000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1575): warning:  #47-D: incompatible redefinition of macro "TIMER4_BASE"  (declared at line 85 of "..\..\..\..\inc/hw_memmap.h")
+  #define TIMER4_BASE                     0x40034000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1576): warning:  #47-D: incompatible redefinition of macro "TIMER5_BASE"  (declared at line 86 of "..\..\..\..\inc/hw_memmap.h")
+  #define TIMER5_BASE                     0x40035000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1577): warning:  #47-D: incompatible redefinition of macro "WTIMER0_BASE"  (declared at line 87 of "..\..\..\..\inc/hw_memmap.h")
+  #define WTIMER0_BASE                    0x40036000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1578): warning:  #47-D: incompatible redefinition of macro "WTIMER1_BASE"  (declared at line 88 of "..\..\..\..\inc/hw_memmap.h")
+  #define WTIMER1_BASE                    0x40037000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1579): warning:  #47-D: incompatible redefinition of macro "ADC0_BASE"  (declared at line 89 of "..\..\..\..\inc/hw_memmap.h")
+  #define ADC0_BASE                       0x40038000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1580): warning:  #47-D: incompatible redefinition of macro "ADC1_BASE"  (declared at line 90 of "..\..\..\..\inc/hw_memmap.h")
+  #define ADC1_BASE                       0x40039000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1581): warning:  #47-D: incompatible redefinition of macro "COMP_BASE"  (declared at line 91 of "..\..\..\..\inc/hw_memmap.h")
+  #define COMP_BASE                       0x4003C000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1582): warning:  #47-D: incompatible redefinition of macro "CAN0_BASE"  (declared at line 93 of "..\..\..\..\inc/hw_memmap.h")
+  #define CAN0_BASE                       0x40040000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1583): warning:  #47-D: incompatible redefinition of macro "CAN1_BASE"  (declared at line 94 of "..\..\..\..\inc/hw_memmap.h")
+  #define CAN1_BASE                       0x40041000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1584): warning:  #47-D: incompatible redefinition of macro "WTIMER2_BASE"  (declared at line 95 of "..\..\..\..\inc/hw_memmap.h")
+  #define WTIMER2_BASE                    0x4004C000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1585): warning:  #47-D: incompatible redefinition of macro "WTIMER3_BASE"  (declared at line 96 of "..\..\..\..\inc/hw_memmap.h")
+  #define WTIMER3_BASE                    0x4004D000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1586): warning:  #47-D: incompatible redefinition of macro "WTIMER4_BASE"  (declared at line 97 of "..\..\..\..\inc/hw_memmap.h")
+  #define WTIMER4_BASE                    0x4004E000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1587): warning:  #47-D: incompatible redefinition of macro "WTIMER5_BASE"  (declared at line 98 of "..\..\..\..\inc/hw_memmap.h")
+  #define WTIMER5_BASE                    0x4004F000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1588): warning:  #47-D: incompatible redefinition of macro "USB0_BASE"  (declared at line 99 of "..\..\..\..\inc/hw_memmap.h")
+  #define USB0_BASE                       0x40050000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1595): warning:  #47-D: incompatible redefinition of macro "EEPROM_BASE"  (declared at line 121 of "..\..\..\..\inc/hw_memmap.h")
+  #define EEPROM_BASE                     0x400AF000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1596): warning:  #47-D: incompatible redefinition of macro "SYSEXC_BASE"  (declared at line 133 of "..\..\..\..\inc/hw_memmap.h")
+  #define SYSEXC_BASE                     0x400F9000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1597): warning:  #47-D: incompatible redefinition of macro "HIB_BASE"  (declared at line 134 of "..\..\..\..\inc/hw_memmap.h")
+  #define HIB_BASE                        0x400FC000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1598): warning:  #47-D: incompatible redefinition of macro "FLASH_CTRL_BASE"  (declared at line 135 of "..\..\..\..\inc/hw_memmap.h")
+  #define FLASH_CTRL_BASE                 0x400FD000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1599): warning:  #47-D: incompatible redefinition of macro "SYSCTL_BASE"  (declared at line 136 of "..\..\..\..\inc/hw_memmap.h")
+  #define SYSCTL_BASE                     0x400FE000UL
+C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1600): warning:  #47-D: incompatible redefinition of macro "UDMA_BASE"  (declared at line 137 of "..\..\..\..\inc/hw_memmap.h")
+  #define UDMA_BASE                       0x400FF000UL
+FormPal.c(605): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+          ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
+FormPal.c(605): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+          ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
+FormPal.c(848): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+                  ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
+FormPal.c(848): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+                  ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
+FormPal.c(395): warning:  #177-D: variable "i"  was declared but never referenced
+      int i = 0;
+FormPal.c(396): warning:  #177-D: variable "i32IPart"  was declared but never referenced
+      int_fast32_t i32IPart[16], i32FPart[16];
+FormPal.c(396): warning:  #177-D: variable "i32FPart"  was declared but never referenced
+      int_fast32_t i32IPart[16], i32FPart[16];
+FormPal.c(397): warning:  #177-D: variable "ui32Idx"  was declared but never referenced
+      uint_fast32_t ui32Idx, ui32CompDCMStarted;
+FormPal.c: 57 warnings, 0 errors
+linking...
+Program Size: Code=19956 RO-data=1072 RW-data=64 ZI-data=2784  
+After Build - User command #1: fromelf --bin --output .\rvmdk\compdcm_mpu9150.bin .\rvmdk\compdcm_mpu9150.axf
+".\rvmdk\compdcm_mpu9150.axf": Error: Q0122E: Could not open file '.\rvmdk\compdcm_mpu9150.axf': No such file or directory
+Finished: 0 information, 0 warning and 1 error messages.
+".\Objects\FormPal.axf" - 0 Error(s), 57 Warning(s).
+Build Time Elapsed:  00:00:00
+</pre>
+</body>
+</html>

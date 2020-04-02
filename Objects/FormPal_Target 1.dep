@@ -1,0 +1,62 @@
+Dependencies for Project 'FormPal', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
+F (.\FormPal.c)(0x5E7D091D)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I .. -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="529" -Drvmdk -DPART_TM4C123GH6PM -DTARGET_IS_TM4C123_RB1 -DUART_BUFFERED -DTM4C123GH6PM-o .\objects\formpal.o --omf_browse .\objects\formpal.crf --depend .\objects\formpal.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9BB318)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9BB318)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_memmap.h)(0x5E5A0523)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/inc/hw_ints.h)(0x5E5A0523)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/debug.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/gpio.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/pin_map.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/rom.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/sysctl.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h)(0x5E5A0533)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9BB31A)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/sensorlib/hw_mpu9150.h)(0x5E5A0524)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/sensorlib/hw_ak8975.h)(0x5E5A0524)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/sensorlib/i2cm_drv.h)(0x5E5A0524)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/sensorlib/ak8975.h)(0x5E5A0524)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/sensorlib/mpu9150.h)(0x5E5A0524)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/sensorlib/comp_dcm.h)(0x5E5A0524)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/examples/boards/my_projects/drivers/rgb.h)(0x5E5A0512)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/examples/boards/my_projects/drivers/buttons.h)(0x5E7BC252)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/examples/boards/my_projects/drivers/buttons.c)(0x5E5A0512)
+I (..\..\..\..\inc/hw_types.h)(0x5E5A0523)
+I (..\..\..\..\inc/hw_gpio.h)(0x5E5A0523)
+I (..\..\..\..\driverlib/rom_map.h)(0x5E5A04F8)
+I (C:/ti/TivaWare_C_Series-2.1.4.178/inc/tm4c123gh6pm.h)(0x5E5A0524)
+F (.\startup_rvmdk.S)(0x5E5A0512)(--cpu Cortex-M4.fp.sp --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123--pd "__UVISION_VERSION SETA 529"--list .\listings\startup_rvmdk.lst --xref -o .\objects\startup_rvmdk.o --depend .\objects\startup_rvmdk.d)
+F (..\..\ek-tm4c123gxl-boostxl-senshub\drivers\rgb.c)(0x5E5A0512)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I .. -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="529" -Drvmdk -DPART_TM4C123GH6PM -DTARGET_IS_TM4C123_RB1 -DUART_BUFFERED -DTM4C123GH6PM-o .\objects\rgb.o --omf_browse .\objects\rgb.crf --depend .\objects\rgb.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9BB318)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9BB318)
+I (..\..\..\..\inc/hw_types.h)(0x5E5A0523)
+I (..\..\..\..\inc/hw_memmap.h)(0x5E5A0523)
+I (..\..\..\..\inc/hw_timer.h)(0x5E5A0523)
+I (..\..\..\..\inc/hw_ints.h)(0x5E5A0523)
+I (..\..\..\..\driverlib/sysctl.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/rom.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/rom_map.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/pin_map.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/timer.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/gpio.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/interrupt.h)(0x5E5A04F8)
+I (..\..\ek-tm4c123gxl-boostxl-senshub\drivers\rgb.h)(0x5E5A0512)
+F (..\..\..\..\utils\uartstdio.c)(0x5E5A0533)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I .. -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="529" -Drvmdk -DPART_TM4C123GH6PM -DTARGET_IS_TM4C123_RB1 -DUART_BUFFERED -DTM4C123GH6PM-o .\objects\uartstdio.o --omf_browse .\objects\uartstdio.crf --depend .\objects\uartstdio.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9BB318)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9BB318)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9BB31A)
+I (..\..\..\..\inc/hw_ints.h)(0x5E5A0523)
+I (..\..\..\..\inc/hw_memmap.h)(0x5E5A0523)
+I (..\..\..\..\inc/hw_types.h)(0x5E5A0523)
+I (..\..\..\..\inc/hw_uart.h)(0x5E5A0523)
+I (..\..\..\..\driverlib/debug.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/interrupt.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/rom.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/rom_map.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/sysctl.h)(0x5E5A04F8)
+I (..\..\..\..\driverlib/uart.h)(0x5E5A04F8)
+I (..\..\..\..\utils/uartstdio.h)(0x5E5A0533)
+F (..\..\..\..\driverlib\rvmdk\driverlib.lib)(0x5E69590F)()
+F (..\..\..\..\sensorlib\rvmdk\sensorlib.lib)(0x5E695661)()
