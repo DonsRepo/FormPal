@@ -129,30 +129,30 @@ C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1599): warning:  #47-D: incompatibl
   #define SYSCTL_BASE                     0x400FE000UL
 C:\Keil_v5\ARM\INC\TI\TM4C123\TM4C123GH6PM.h(1600): warning:  #47-D: incompatible redefinition of macro "UDMA_BASE"  (declared at line 137 of "..\..\..\..\inc/hw_memmap.h")
   #define UDMA_BASE                       0x400FF000UL
-FormPal.c(605): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+FormPal.c(636): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
           ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
-FormPal.c(605): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+FormPal.c(636): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
           ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
-FormPal.c(848): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+FormPal.c(802): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
                   ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
-FormPal.c(848): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
+FormPal.c(802): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "uint8_t *"
                   ButtonsPoll(&ui8ButtonsChanged, &ui8Buttons); //check for button press
-FormPal.c(395): warning:  #177-D: variable "i"  was declared but never referenced
+FormPal.c(425): warning:  #177-D: variable "i"  was declared but never referenced
       int i = 0;
-FormPal.c(396): warning:  #177-D: variable "i32IPart"  was declared but never referenced
+FormPal.c(426): warning:  #177-D: variable "i32IPart"  was declared but never referenced
       int_fast32_t i32IPart[16], i32FPart[16];
-FormPal.c(396): warning:  #177-D: variable "i32FPart"  was declared but never referenced
+FormPal.c(426): warning:  #177-D: variable "i32FPart"  was declared but never referenced
       int_fast32_t i32IPart[16], i32FPart[16];
-FormPal.c(397): warning:  #177-D: variable "ui32Idx"  was declared but never referenced
+FormPal.c(427): warning:  #177-D: variable "ui32Idx"  was declared but never referenced
       uint_fast32_t ui32Idx, ui32CompDCMStarted;
 FormPal.c: 57 warnings, 0 errors
 linking...
-Program Size: Code=19956 RO-data=1072 RW-data=64 ZI-data=2784  
+Program Size: Code=18640 RO-data=1072 RW-data=112 ZI-data=2808  
 After Build - User command #1: fromelf --bin --output .\rvmdk\compdcm_mpu9150.bin .\rvmdk\compdcm_mpu9150.axf
 ".\rvmdk\compdcm_mpu9150.axf": Error: Q0122E: Could not open file '.\rvmdk\compdcm_mpu9150.axf': No such file or directory
 Finished: 0 information, 0 warning and 1 error messages.
 ".\Objects\FormPal.axf" - 0 Error(s), 57 Warning(s).
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

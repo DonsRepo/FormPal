@@ -52,32 +52,7 @@
 															 
 //delta for euler angle deviation from trained model
 #define GESTURE_EMIT_EULERS_DELTA				\
-															 20.0f														 
-
-
-
-
-//*****************************************************************************
-//
-//!
-//! <h1>Nine Axis Sensor Fusion with the MPU9150 and Complimentary-Filtered
-//! DCM (compdcm_mpu9150)</h1>
-//!
-//! This example demonstrates the basic use of the Sensor Library, TM4C123G
-//! LaunchPad and SensHub BoosterPack to obtain nine axis motion measurements
-//! from the MPU9150.  The example fuses the nine axis measurements into a set
-//! of Euler angles: roll, pitch and yaw.  It also produces the rotation
-//! quaternions.  The fusion mechanism demonstrated is complimentary-filtered
-//! direct cosine matrix (DCM) algorithm is provided as part of the Sensor
-//! Library.
-//!
-//! Connect a serial terminal program to the LaunchPad's ICDI virtual serial
-//! port at 115,200 baud.  Use eight bits per byte, no parity and one stop bit.
-//! The raw sensor measurements, Euler angles and quaternions are printed to
-//! the terminal.  The RGB LED begins to blink at 1Hz after initialization is
-//! completed and the example application is running.
-//
-//*****************************************************************************
+															 10.0f														 
 
 //*****************************************************************************
 //
@@ -383,7 +358,62 @@ void ConfigureUART(void)
     UARTStdioConfig(0, 115200, 16000000);
 }
 
+//*****************************************************************************
+//
+// Calculate change in acceleration and Euler angles from sensor data, return it back in an 
+// array. This is called wherever sensor data is updated within the main function.
+//
+//*****************************************************************************
+		
 
+float* SensorUpdateMath(float *pfAccelNet, float *pfEulers)
+{	    static float pfSensorCalc[5];
+			static float fAccelMagnitude, fJerk, g_fAccelMagnitudePrevious;
+			static float Roll, Pitch, Yaw, PreviousRoll, PreviousPitch, PreviousYaw,
+			JerkRoll, JerkPitch, JerkYaw;
+			
+			fAccelMagnitude = (pfAccelNet[0] * pfAccelNet[0]) +  // get local acceleration magnitude
+												(pfAccelNet[1] * pfAccelNet[1]) +
+												(pfAccelNet[2] * pfAccelNet[2]);
+
+			// Subtract from previous accel magnitude, measuring delta acceleration
+
+			fJerk = fAccelMagnitude - g_fAccelMagnitudePrevious;
+			g_fAccelMagnitudePrevious = fAccelMagnitude;
+
+			//get Euler angles, convert to degrees
+
+			pfEulers[0] *= 57.295779513082320876798154814105f;
+			pfEulers[1] *= 57.295779513082320876798154814105f;
+			pfEulers[2] *= 57.295779513082320876798154814105f;
+
+			if(pfEulers[2] < 0)
+			{
+					pfEulers[2] += 360.0f;
+			}
+			Roll = pfEulers[0];
+			Pitch = pfEulers[1];
+			Yaw = pfEulers[2];
+
+			//calculate changes in Eulers angles
+			JerkRoll = Roll-PreviousRoll;
+			JerkPitch=Pitch-PreviousPitch;
+			JerkYaw = Yaw-PreviousYaw;
+			JerkRoll = fabs(JerkRoll);
+			JerkPitch= fabs(JerkPitch);
+			JerkYaw=fabs(JerkYaw);
+			PreviousRoll = Roll;
+			PreviousPitch = Pitch;
+			PreviousYaw = Yaw;
+		  pfSensorCalc[0] = JerkRoll;
+			pfSensorCalc[1] = JerkPitch;
+			pfSensorCalc[2] = JerkYaw;
+			pfSensorCalc[3] = fJerk;
+			pfSensorCalc[4] = fAccelMagnitude;
+			
+			return pfSensorCalc;
+
+}
 
 //*****************************************************************************
 //
@@ -398,6 +428,41 @@ int main(void)
     float pfData[16];
     float *pfAccel, *pfGyro, *pfMag, *pfEulers, *pfQuaternion;
     volatile bool Trainingmodebeginflag;
+	
+	    //create variables to store useful data from accelerometer and eulers
+    //"jerk" variables serve as
+    volatile float fAccelMagnitude, fJerk;
+    float pfAccelNet[3];
+    float ppfDCM[3][3];
+    volatile float g_fAccelMagnitudePrevious;
+    volatile float Roll, Pitch, Yaw, PreviousRoll, PreviousPitch, PreviousYaw,
+             JerkRoll, JerkPitch, JerkYaw;
+
+//		float pfSensorCalc[5]; //holds results of sensor calculations
+		
+    //training timers
+    unsigned int TrainingStartTimer; //Training gesture ready wait time
+    unsigned int TrainingRunTimer; //timers for learning gesture in two parts separated by apex
+    unsigned int WaitForMotionTimer = 0;
+		volatile bool TrainingModeStartFlag=0; //1=training mode active
+		volatile bool TrainingEndFlag = 0;
+    volatile bool TrainingReadyFlag = 0;
+    volatile bool ExerciseMode = 0;
+
+    //timers for inactivity at training mode start
+    TrainingStartTimer = 0;
+    TrainingRunTimer = 0;
+
+    //Timer that helps reset exercise features to 0 when rest exceeds time limit
+    unsigned int ExerciseModeRestTimer = 0;
+
+    //training variables
+    volatile float minAccelTraining[3], maxAccelTraining[3], minEulersTraining[3], maxEulersTraining[3], TrialExerciseTimeTraining,
+             TrialAccelMagnitudeTraining, TrialSpeedTraining;
+
+    //exercise trial variables
+    volatile float minAccel[3], maxAccel[3], minEulers[3], maxEulers[3], TrialExerciseTime,
+             TrialAccelMagnitude, TrialSpeed;
     //
     // Initialize convenience pointers that clean up and clarify the code
     // meaning. We want all the data in a single contiguous array so that
@@ -557,40 +622,6 @@ int main(void)
 
 
 
-    //create variables to store useful data from accelerometer and eulers
-    //"jerk" variables serve as
-    volatile float fAccelMagnitude, fJerk;
-    float pfAccelNet[3];
-    float ppfDCM[3][3];
-    volatile float g_fAccelMagnitudePrevious;
-    volatile float Roll, Pitch, Yaw, PreviousRoll, PreviousPitch, PreviousYaw,
-             JerkRoll, JerkPitch, JerkYaw;
-
-    //training timers
-    unsigned int TrainingStartTimer; //Training gesture ready wait time
-    unsigned int TrainingRunTimer; //timers for learning gesture in two parts separated by apex
-    unsigned int WaitForMotionTimer = 0;
-		volatile bool TrainingModeStartFlag=0; //1=training mode active
-		volatile bool TrainingEndFlag = 0;
-    volatile bool TrainingReadyFlag = 0;
-    volatile bool ExerciseMode = 0;
-
-    //timers for inactivity at training mode start
-    TrainingStartTimer = 0;
-    TrainingRunTimer = 0;
-
-    //Timer that helps reset exercise features to 0 when rest exceeds time limit
-    unsigned int ExerciseModeRestTimer = 0;
-
-    //training variables
-    volatile float minAccelTraining[3], maxAccelTraining[3], minEulersTraining[3], maxEulersTraining[3], TrialExerciseTimeTraining,
-             TrialAccelMagnitudeTraining, TrialSpeedTraining;
-
-    //exercise trial variables
-    volatile float minAccel[3], maxAccel[3], minEulers[3], maxEulers[3], TrialExerciseTime,
-             TrialAccelMagnitude, TrialSpeed;
-
-
 
     while(1)
     {
@@ -630,7 +661,7 @@ int main(void)
             //
             while(TrainingStartTimer<30000 && (fJerk < GESTURE_EMIT_THRESHOLD_ACCEL) |
                     (fJerk < -GESTURE_EMIT_THRESHOLD_ACCEL)&& (JerkPitch < GESTURE_EMIT_THRESHOLD_EULERS_REST) &&
-                    (JerkRoll < GESTURE_EMIT_THRESHOLD_EULERS_REST) && (JerkPitch < GESTURE_EMIT_THRESHOLD_EULERS_REST))
+                    (JerkRoll < GESTURE_EMIT_THRESHOLD_EULERS_REST))
             {
                 TrainingStartTimer = TrainingStartTimer+1; 	//advance gesture ready start timer, no movement
                 // if no movement
@@ -638,47 +669,20 @@ int main(void)
 
                 CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1], //get local update of sensor readings
                                    pfAccel[2]);
-
-                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);							//normalize to geospatial refernce
-                MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
-
-                fAccelMagnitude = (pfAccelNet[0] * pfAccelNet[0]) + //perform local calculations of accel magnitude
-                                  (pfAccelNet[1] * pfAccelNet[1]) +
-                                  (pfAccelNet[2] * pfAccelNet[2]);
-
-                //
-                // Subtract from previous accel magnitude, measuring delta acceleration
-                //
-
-                fJerk = fAccelMagnitude - g_fAccelMagnitudePrevious;
-                g_fAccelMagnitudePrevious = fAccelMagnitude; //get local jerk values
-
                 //get Euler angles, convert to degrees
                 CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
                                      pfEulers + 2);
-                pfEulers[0] *= 57.295779513082320876798154814105f;
-                pfEulers[1] *= 57.295779513082320876798154814105f;
-                pfEulers[2] *= 57.295779513082320876798154814105f;
 
-                if(pfEulers[2] < 0)
-                {
-                    pfEulers[2] += 360.0f;
-                }
+                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);							//normalize to geospatial refernce
+                MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
+							
+								float* pfSensorCalc = SensorUpdateMath(pfAccelNet, pfEulers);
+								JerkRoll = pfSensorCalc[0];
+								JerkPitch = pfSensorCalc[1];
+								JerkYaw = pfSensorCalc[2];
+								fJerk = pfSensorCalc[3];
+								fAccelMagnitude = pfSensorCalc[5];
 
-                Roll = pfEulers[0];
-                Pitch = pfEulers[1];
-                Yaw = pfEulers[2];
-
-                //calculate changes in Eulers angles
-                JerkRoll = Roll-PreviousRoll;
-                JerkPitch=Pitch-PreviousPitch;
-                JerkYaw = Yaw-PreviousYaw;
-                JerkRoll = fabs(JerkRoll);
-                JerkPitch= fabs(JerkPitch);
-                JerkYaw=fabs(JerkYaw);
-                PreviousRoll = Roll;
-                PreviousPitch = Pitch;
-                PreviousYaw = Yaw;
             }
 
             ///////////////////
@@ -693,46 +697,23 @@ int main(void)
 								UARTprintf("\033[19;75H\n \n Training mode standby, movement detected");
                 TrainingStartTimer = 0;											//if movement goes above thresholds, reset timer
 
+							
                 CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],    //get local acceleration values
                                    pfAccel[2]);
+				        CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
+                                  pfEulers + 2);
 
                 CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);			//normalize to geospatial refernce
                 MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
+								
+							  float* pfSensorCalc = SensorUpdateMath(pfAccelNet, pfEulers);
+								JerkRoll = pfSensorCalc[0];
+								JerkPitch = pfSensorCalc[1];
+								JerkYaw = pfSensorCalc[2];
+								fJerk = pfSensorCalc[3];
+								fAccelMagnitude = pfSensorCalc[4];
 
-                fAccelMagnitude = (pfAccelNet[0] * pfAccelNet[0]) +  // get local acceleration magnitude
-                                  (pfAccelNet[1] * pfAccelNet[1]) +
-                                  (pfAccelNet[2] * pfAccelNet[2]);
 
-                // Subtract from previous accel magnitude, measuring delta acceleration
-
-                fJerk = fAccelMagnitude - g_fAccelMagnitudePrevious;
-                g_fAccelMagnitudePrevious = fAccelMagnitude;
-
-                //get Euler angles, convert to degrees
-                CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
-                                     pfEulers + 2);
-                pfEulers[0] *= 57.295779513082320876798154814105f;
-                pfEulers[1] *= 57.295779513082320876798154814105f;
-                pfEulers[2] *= 57.295779513082320876798154814105f;
-
-                if(pfEulers[2] < 0)
-                {
-                    pfEulers[2] += 360.0f;
-                }
-                Roll = pfEulers[0];
-                Pitch = pfEulers[1];
-                Yaw = pfEulers[2];
-
-                //calculate changes in Eulers angles
-                JerkRoll = Roll-PreviousRoll;
-                JerkPitch=Pitch-PreviousPitch;
-                JerkYaw = Yaw-PreviousYaw;
-                JerkRoll = fabs(JerkRoll);
-                JerkPitch= fabs(JerkPitch);
-                JerkYaw=fabs(JerkYaw);
-                PreviousRoll = Roll;
-                PreviousPitch = Pitch;
-                PreviousYaw = Yaw;
             }
 
             ///////////////////
@@ -800,47 +781,20 @@ int main(void)
                 MPU9150DataMagnetoGetFloat(&g_sMPU9150Inst, pfMag, pfMag + 1,
                                            pfMag + 2);
 
-                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1], //get local update of sensor readings
+                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],    //get local acceleration values
                                    pfAccel[2]);
+				        CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
+                                  pfEulers + 2);
 
-                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);							//normalize to geospatial refernce
+                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);			//normalize to geospatial refernce
                 MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
-
-                fAccelMagnitude = (pfAccelNet[0] * pfAccelNet[0]) + //perform local calculations of accel magnitude
-                                  (pfAccelNet[1] * pfAccelNet[1]) +
-                                  (pfAccelNet[2] * pfAccelNet[2]);
-                //
-                // Subtract from previous accel magnitude, measuring delta acceleration
-                //
-                fJerk = fAccelMagnitude - g_fAccelMagnitudePrevious;
-                g_fAccelMagnitudePrevious = fAccelMagnitude; //get local jerk values
-
-                //get Euler angles, convert to degrees
-                CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
-                                     pfEulers + 2);
-                pfEulers[0] *= 57.295779513082320876798154814105f;
-                pfEulers[1] *= 57.295779513082320876798154814105f;
-                pfEulers[2] *= 57.295779513082320876798154814105f;
-
-                if(pfEulers[2] < 0)
-                {
-                    pfEulers[2] += 360.0f;
-                }
-
-                Roll = pfEulers[0];
-                Pitch = pfEulers[1];
-                Yaw = pfEulers[2];
-
-                //calculate changes in Eulers angles
-                JerkRoll = Roll-PreviousRoll;
-                JerkPitch=Pitch-PreviousPitch;
-                JerkYaw = Yaw-PreviousYaw;
-                JerkRoll = fabs(JerkRoll);
-                JerkPitch= fabs(JerkPitch);
-                JerkYaw=fabs(JerkYaw);
-                PreviousRoll = Roll;
-                PreviousPitch = Pitch;
-                PreviousYaw = Yaw;
+								
+							  float* pfSensorCalc = SensorUpdateMath(pfAccelNet, pfEulers);
+								JerkRoll = pfSensorCalc[0];
+								JerkPitch = pfSensorCalc[1];
+								JerkYaw = pfSensorCalc[2];
+								fJerk = pfSensorCalc[3];
+								fAccelMagnitude = pfSensorCalc[4];
 
                 //
                 //left button press (SW2) ends training mode here
@@ -861,14 +815,9 @@ int main(void)
                         CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],    //get local acceleration values
                                            pfAccel[2]);
 
-                        CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);			//normalize to geospatial refernce
-                        MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
-
-
                         //get Euler angles, convert to degrees
                         CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
                                              pfEulers + 2);
-
                         break;
                     }
                 }
@@ -888,48 +837,20 @@ int main(void)
 
                 TrainingRunTimer++; //advance timer for movement
 
-
-
-                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],     //get local acceleration values
+                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],    //get local acceleration values
                                    pfAccel[2]);
+				        CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
+                                  pfEulers + 2);
 
-                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);											//normalize to geospatial refernce
+                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);			//normalize to geospatial refernce
                 MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
-
-                fAccelMagnitude = (pfAccelNet[0] * pfAccelNet[0]) +          // get local acceleration magnitude
-                                  (pfAccelNet[1] * pfAccelNet[1]) +
-                                  (pfAccelNet[2] * pfAccelNet[2]);
-
-                // Subtract from previous accel magnitude, measuring delta acceleration
-
-                fJerk = fAccelMagnitude - g_fAccelMagnitudePrevious;
-                g_fAccelMagnitudePrevious = fAccelMagnitude;
-
-                //get Euler angles, convert to degrees
-                CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
-                                     pfEulers + 2);
-                pfEulers[0] *= 57.295779513082320876798154814105f;
-                pfEulers[1] *= 57.295779513082320876798154814105f;
-                pfEulers[2] *= 57.295779513082320876798154814105f;
-
-                if(pfEulers[2] < 0)
-                {
-                    pfEulers[2] += 360.0f;
-                }
-                Roll = pfEulers[0];
-                Pitch = pfEulers[1];
-                Yaw = pfEulers[2];
-
-                //calculate changes in Eulers angles
-                JerkRoll = Roll-PreviousRoll;
-                JerkPitch=Pitch-PreviousPitch;
-                JerkYaw = Yaw-PreviousYaw;
-                JerkRoll = fabs(JerkRoll);
-                JerkPitch= fabs(JerkPitch);
-                JerkYaw=fabs(JerkYaw);
-                PreviousRoll = Roll;
-                PreviousPitch = Pitch;
-                PreviousYaw = Yaw;
+								
+							  float* pfSensorCalc = SensorUpdateMath(pfAccelNet, pfEulers);
+								JerkRoll = pfSensorCalc[0];
+								JerkPitch = pfSensorCalc[1];
+								JerkYaw = pfSensorCalc[2];
+								fJerk = pfSensorCalc[3];
+								fAccelMagnitude = pfSensorCalc[5];
 
                 //
                 //feature extraction
@@ -1000,9 +921,6 @@ int main(void)
                     TrialAccelMagnitudeTraining = fAccelMagnitude;
                 }
 
-
-
-
             }
 
             //////////////////////////////////////
@@ -1017,12 +935,9 @@ int main(void)
                 CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);			//normalize to geospatial refernce
                 MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
 
-
                 //get Euler angles, convert to degrees
                 CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
                                      pfEulers + 2);
-
-
 
                 UARTprintf("\n \n Training Complete");
                 TrainingReadyFlag = 0; //clear training ready flag
@@ -1070,10 +985,6 @@ int main(void)
                     (fJerk < -GESTURE_EMIT_THRESHOLD_ACCEL)&& (JerkPitch < GESTURE_EMIT_THRESHOLD_EULERS_MOTION) &&
                     (JerkRoll < GESTURE_EMIT_THRESHOLD_EULERS_MOTION) && (JerkPitch < GESTURE_EMIT_THRESHOLD_EULERS_MOTION)))
             {
-//							  g_pui32Colors[RED] = 0x0800; //set LED to white
-//                g_pui32Colors[BLUE] = 0x8000;
-//                g_pui32Colors[GREEN] = 0x8000;
-//                RGBColorSet(g_pui32Colors);
 
                 ExerciseModeRestTimer++;
 
@@ -1094,48 +1005,21 @@ int main(void)
                 MPU9150DataMagnetoGetFloat(&g_sMPU9150Inst, pfMag, pfMag + 1,
                                            pfMag + 2);
 
-                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1], //get local update of sensor readings
+                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],    //get local acceleration values
                                    pfAccel[2]);
+				        CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
+                                  pfEulers + 2);
 
-                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);							//normalize to geospatial refernce
+                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);			//normalize to geospatial refernce
                 MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
-
-                fAccelMagnitude = (pfAccelNet[0] * pfAccelNet[0]) + //perform local calculations of accel magnitude
-                                  (pfAccelNet[1] * pfAccelNet[1]) +
-                                  (pfAccelNet[2] * pfAccelNet[2]);
-                //
-                // Subtract from previous accel magnitude, measuring delta acceleration
-                //
-                fJerk = fAccelMagnitude - g_fAccelMagnitudePrevious;
-                g_fAccelMagnitudePrevious = fAccelMagnitude; //get local jerk values
-
-                //get Euler angles, convert to degrees
-                CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
-                                     pfEulers + 2);
-                pfEulers[0] *= 57.295779513082320876798154814105f;
-                pfEulers[1] *= 57.295779513082320876798154814105f;
-                pfEulers[2] *= 57.295779513082320876798154814105f;
-
-                if(pfEulers[2] < 0)
-                {
-                    pfEulers[2] += 360.0f;
-                }
-
-                Roll = pfEulers[0];
-                Pitch = pfEulers[1];
-                Yaw = pfEulers[2];
-
-                //calculate changes in Eulers angles
-                JerkRoll = Roll-PreviousRoll;
-                JerkPitch=Pitch-PreviousPitch;
-                JerkYaw = Yaw-PreviousYaw;
-                JerkRoll = fabs(JerkRoll);
-                JerkPitch= fabs(JerkPitch);
-                JerkYaw=fabs(JerkYaw);
-                PreviousRoll = Roll;
-                PreviousPitch = Pitch;
-                PreviousYaw = Yaw;
-
+								
+							  float* pfSensorCalc = SensorUpdateMath(pfAccelNet, pfEulers);
+								JerkRoll = pfSensorCalc[0];
+								JerkPitch = pfSensorCalc[1];
+								JerkYaw = pfSensorCalc[2];
+								fJerk = pfSensorCalc[3];
+								fAccelMagnitude = pfSensorCalc[4];
+								
                 if(ExerciseModeRestTimer>1100) //reset all exercise features if rest timeout
                 {
 
@@ -1182,54 +1066,23 @@ int main(void)
                     | (JerkRoll > GESTURE_EMIT_THRESHOLD_EULERS_MOTION) | (JerkYaw > GESTURE_EMIT_THRESHOLD_EULERS_MOTION)))
             {
 
-
                 TrainingRunTimer++; //advance timer for movement
                 ExerciseModeRestTimer = 0;
-//                g_pui32Colors[RED] = 0x0000; //set LED to white
-//                g_pui32Colors[BLUE] = 0x8000;
-//                g_pui32Colors[GREEN] = 0x0000;
-//                RGBColorSet(g_pui32Colors);
-
-                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],     //get local acceleration values
+							
+                CompDCMAccelUpdate(&g_sCompDCMInst, pfAccel[0], pfAccel[1],    //get local acceleration values
                                    pfAccel[2]);
+				        CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
+                                  pfEulers + 2);
 
-                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);											//normalize to geospatial refernce
+                CompDCMMatrixGet(&g_sCompDCMInst, ppfDCM);			//normalize to geospatial refernce
                 MatrixVectorMul(pfAccelNet, ppfDCM, pfAccel);
-
-                fAccelMagnitude = (pfAccelNet[0] * pfAccelNet[0]) +          // get local acceleration magnitude
-                                  (pfAccelNet[1] * pfAccelNet[1]) +
-                                  (pfAccelNet[2] * pfAccelNet[2]);
-
-                // Subtract from previous accel magnitude, measuring delta acceleration
-
-                fJerk = fAccelMagnitude - g_fAccelMagnitudePrevious;
-                g_fAccelMagnitudePrevious = fAccelMagnitude;
-
-                //get Euler angles, convert to degrees
-                CompDCMComputeEulers(&g_sCompDCMInst, pfEulers, pfEulers + 1,
-                                     pfEulers + 2);
-                pfEulers[0] *= 57.295779513082320876798154814105f;
-                pfEulers[1] *= 57.295779513082320876798154814105f;
-                pfEulers[2] *= 57.295779513082320876798154814105f;
-
-                if(pfEulers[2] < 0)
-                {
-                    pfEulers[2] += 360.0f;
-                }
-                Roll = pfEulers[0];
-                Pitch = pfEulers[1];
-                Yaw = pfEulers[2];
-
-                //calculate changes in Eulers angles
-                JerkRoll = Roll-PreviousRoll;
-                JerkPitch=Pitch-PreviousPitch;
-                JerkYaw = Yaw-PreviousYaw;
-                JerkRoll = fabs(JerkRoll);
-                JerkPitch= fabs(JerkPitch);
-                JerkYaw=fabs(JerkYaw);
-                PreviousRoll = Roll;
-                PreviousPitch = Pitch;
-                PreviousYaw = Yaw;
+								
+							  float* pfSensorCalc = SensorUpdateMath(pfAccelNet, pfEulers);
+								JerkRoll = pfSensorCalc[0];
+								JerkPitch = pfSensorCalc[1];
+								JerkYaw = pfSensorCalc[2];
+								fJerk = pfSensorCalc[3];
+								fAccelMagnitude = pfSensorCalc[4];
 
                 ///////////////////
                 //feature extraction
@@ -1308,8 +1161,6 @@ int main(void)
 //                        && minAccel[2]>=minAccelTraining[2] && maxAccel[0]<=maxAccelTraining[0] && maxAccel[1]<=maxAccelTraining[1]
 //                        && maxAccel[2]<=maxAccelTraining[2] &&								
 								
-								
-								
                 if(minEulers[0]>=minEulersTraining[0] && minEulers[1]>=minEulersTraining[1]
                         && minEulers[2]>=minEulersTraining[2] && maxEulers[0]<=maxEulersTraining[0] && maxEulers[1]<=maxEulersTraining[1]
                         && maxEulers[2]<=maxEulersTraining[2])
@@ -1322,12 +1173,11 @@ int main(void)
 //minAccel[0]<=minAccelTraining[0] || minAccel[1]<=minAccelTraining[1]
 //                        || minAccel[2]<=minAccelTraining[2] || maxAccel[0]>=maxAccelTraining[0] || maxAccel[1]>=maxAccelTraining[1]
 //                        || maxAccel[2]>=maxAccelTraining[2] ||
+								
                 else if(minEulers[0]<=minEulersTraining[0] || minEulers[1]<=minEulersTraining[1]
                         || minEulers[2]<=minEulersTraining[2] || maxEulers[0]>=maxEulersTraining[0] || maxEulers[1]>=maxEulersTraining[1]
                         || maxEulers[2]>=maxEulersTraining[2])
                 {
-
-
                     g_pui32Colors[RED] = 0x8000; //set LED to red to indicate path deviation
                     g_pui32Colors[BLUE] = 0x0000;
                     g_pui32Colors[GREEN] = 0x0000;

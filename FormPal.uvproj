@@ -377,7 +377,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>rvmdk PART_TM4C123GH6PM TARGET_IS_TM4C123_RB1 UART_BUFFERED</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\..\..\..</IncludePath>
+              <IncludePath>..;..\..</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
