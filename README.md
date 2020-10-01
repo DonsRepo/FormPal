@@ -150,13 +150,13 @@ knowing when the I2C protocol is starting or stopping a message.
 <p align = "center">
 <img src="Images/system_architecture.png">
 <br>
-Figure: System architecture. There is a typo, IMU interrupt pins connect to GPIO Pins 2 and 3.
+System architecture.
 </p>
 
 <p align = "center">
 <img src="Images/hardware_init.JPG">
 <br>
-Figure: Hardware Initialiazation Flow
+Initialiazation Flow
 </p>
 
 Next, the weights for the Directional Cosine Matrix sensor fusion and
@@ -377,14 +377,19 @@ raw sensor output at the addresses contained in the various pointers
 pfAccelNet, pfEulers in debug mode helped speed this process up
 substantially.
 
-![](media/image13.png){width="1.6885017497812773in"
-height="3.1515146544181976in"}
-![](media/image14.png){width="4.280302930883639in"
-height="4.585518372703412in"}
+<p align = "center">
+<img src="Images/polling.png">
+</p>
 
-Figure - Training wait period. This requires a certain amount of rest to
+<p align = "center">
+<img src="Images/pretraining.png">
+<br>
+<br>
+
+Training wait period. This requires a certain amount of rest to
 automatically begin training. A very short timer for movement is
 included to ensure training mode is not entered prematurely.
+</p>
 
 ### Training 
 
@@ -399,12 +404,13 @@ entered if the TrainingModeEnd flag is set. It clears the
 TrainingModeReady flag and sets the Exercise flag to proceed to the next
 state.
 
-![](media/image15.png){width="4.336021434820648in"
-height="6.212121609798775in"}
-
+<p align = "center">
+<img src="Images/training.png">
+<br>
+<br>
 Figure - Training mode. If movement is detected, features are extracted
 and stored to compare against exercise movements
-
+</p>
 ### Exercise
 
 Exercise mode is the last state. If there is movement above the rest
@@ -414,8 +420,9 @@ cleared after a brief timer is advanced beyond its threshold which
 prevents prematurely assuming the user has exited an exercise
 repetition.
 
-![](media/image16.png){width="4.090441819772528in"
-height="6.060605861767279in"}
+<p align = "center">
+<img src="Images/exercise.png">
+</p>
 
 Figure - Exercise Mode. If no movement, clear exercise features from
 memory. If movement, extract features from IMU data and compare to
@@ -429,7 +436,7 @@ Equipment
 
 Quantitative analysis of system performance was made with a HiLetgo USB
 analyzer capable of 24MHZ, 8 channel analysis of the TM4C123GXL's logic
-pins, connected to a Lenovo P50 Laptop PC running Windows 10 Home 64-bit
+pins, connected to a Lenovo P-series Workstation Laptop PC running Windows 10 Home 64-bit
 with an Intel i7 2.7 GHz processor and 16 GB ram.
 
 UART
@@ -451,10 +458,12 @@ real time operation (latency under 200ms), a the logic analyzer was
 connected to PF2 (SW1) and the LEDs: PF1 (RED), PF2 (BLUE), PF3 (GREEN).
 This is shown in the following figure.
 
-![](media/image17.png){width="2.6430555555555557in"
-height="3.9062653105861767in"}
-
+<p align = "center">
+<img src="Images/logic_analyzer.png">
+<br>
+<br>
 Figure - Logic analysis connections to TM4C launchpad
+</p>
 
 The following analysis plot depicts the state change from solid white
 LED to GREEN LED + RED LED = YELLOW, caused by software polling of SW1.
@@ -463,9 +472,12 @@ button press negative edge and the BLUE LED turning off was
 approximately 61.1475 ms which is well inside of the 200 ms criteria.
 This implies that the system is responsive to state changes.
 
-![](media/image18.png){width="6.5in" height="2.1777777777777776in"}
-
+<p align = "center">
+<img src="Images/logic.png">
+<br>
+<br>
 Figure - Logic analyzer output showing switch press and LED change
+</p>
 
 ### I2C Performance
 
@@ -479,7 +491,12 @@ clock value of 50Hz. The MCU interrupt is configured to be falling edge
 which makes sense as the interrupt is high normally, as seen below on
 Channel 5.
 
-![](media/image19.png){width="6.5in" height="1.6736111111111112in"}
+<p align = "center">
+<img src="Images/logic.png">
+<br>
+<br>
+Figure - Logic analyzer output showing switch press and LED change
+</p>
 
 #### I2C Responsiveness for Changing States
 
@@ -489,9 +506,10 @@ by the Formpal algorithm within 200 ms. The following figure
 demonstrates a simple test: move the IMU and see if the system changes
 states and alters the color that the RGB LEDs flash.
 
-![](media/image20.png){width="5.4318186789151355in"
-height="2.8110826771653543in"}
-
+<p align = "center">
+<img src="Images/logic3.png">
+</p>
+    
 Training mode was used for this test. In this mode, the system flashes
 the LEDs yellow when movement is below threshold and white when movement
 is above threshold.. The change is that the BLUE LED joins flashing when
@@ -526,23 +544,27 @@ a time until a the LED turned RED.
 
 The following figures show the raw data from the protractor test.
 
-![](media/image21.jpeg){width="2.941666666666667in"
-height="4.151515748031496in"}![](media/image22.png){width="3.0747069116360457in"
-height="4.143939195100613in"}
-
+<p align = "center">
+<img src="Images/yawtest.JPG">
+<br>
+<br>
 Figure - Yaw Test
+</p>
 
-![](media/image23.png){width="2.994453193350831in"
-height="4.219697069116361in"}![](media/image24.png){width="2.977273622047244in"
-height="4.212633420822397in"}
-
+<p align = "center">
+<img src="Images/pitchtest.JPG">
+<br>
+<br>
 Figure - Pitch Test
+</p>
 
-![](media/image25.jpeg){width="2.8939391951006126in"
-height="2.4116174540682414in"}![](media/image26.png){width="3.1212117235345582in"
-height="2.4089107611548557in"}
-
+<p align = "center">
+<img src="Images/pitchtest.JPG">
+<br>
+<br>
 Figure - Roll Test
+</p>
+
 
 Quantitative Analysis Test Result Summary
 -----------------------------------------
@@ -550,15 +572,14 @@ Quantitative Analysis Test Result Summary
 These results are summarized in the following table. Formpal passed all
 verification tets.
 
-  Test                     Result             Max. Allowable Result   Within tolerance?
-  ------------------------ ------------------ ----------------------- -------------------
-  Roll                     20 +/- 2 degrees   30 degrees              Yes
-  Pitch                    20 +/- 2 degrees   30 degrees              Yes
-  Yaw                      17 +/- 2 degrees   30 degrees              Yes
-  Switch to LED change     61.1475 ms         200 ms                  Yes
-  Movement to LED change   1.229 ms           200 ms                  Yes
+ | Test                    | Result            | Max. Allowable Result  | Within tolerance?    |
+ | ------------------------| ------------------| -----------------------| -------------------  |
+ | Roll                    | 20 +/- 2 degrees  | 30 degrees             |Yes                   |
+ | Pitch                   | 20 +/- 2 degrees  | 30 degrees             |Yes                   |
+ | Yaw                     | 17 +/- 2 degrees  | 30 degrees             |Yes                   |
+ | Switch to LED change    | 61.1475 ms        | 200 ms                 |Yes                   |
+ | Movement to LED change  | 1.229 ms          | 200 ms                 |Yes                   |
 
-Table - Summarized Verification Results
 
 Qualitative Verification
 ------------------------
@@ -594,26 +615,12 @@ Manufacturability, Modularity and Expandability
 To deal with these constraints that would be present during
 manufacturing, an integrated PCB that holds both the IMU and MCU would
 have to be developed. Unused aspects of the TM4C123G (like the
-additional switch and unused GPIO ports) would have to be discarded. To
+additional switch and unused GPIO ports) would be wasted. To
 make the device more expandable, a Bluetooth module could be added so
 the MCU could be tethered to a smartphone. Additional features like
 automatic recognition of exercise movements by machine learning
 classifiers (e.g. recognizing a bicep curl) could take place to expand
 the functionality.
-
-Hardware
-========
-
-The following figure shows how the microcontroller is setup to
-communicate with the MCU and I/O hardware. Note that the serial I2C
-serial data transfer pin is bidirectional, enabling system parameters
-(clock speed, sensor fusion weights) to be passed to the device before
-it is used to collect data.
-
-![](media/image1.png){width="7.27669728783902in"
-height="1.9583333333333333in"}
-
-Figure 1 - Formpal System Architecture
 
 Discussion
 ==========
