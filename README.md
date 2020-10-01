@@ -1,75 +1,9 @@
-Contents {#contents .TOC-Heading}
-========
-
-[Abstract 3](#abstract)
-
-[System Requirements 3](#system-requirements)
-
-[Constraints 3](#constraints)
-
-[Interrupt 3](#interrupt)
-
-[Social and Political 4](#social-and-political)
-
-[Manufacturability, Modularity and Expandability
-4](#manufacturability-modularity-and-expandability)
-
-[Environmental 4](#environmental)
-
-[Hardware 4](#hardware)
-
-[Software 5](#software)
-
-[Hardware Initialization 6](#hardware-initialization)
-
-[Motion Processing Unit (MPU) 7](#motion-processing-unit-mpu)
-
-[I/O Interface: UART, Switches and LEDs
-8](#io-interface-uart-switches-and-leds)
-
-[Directional Cosine Matrix (DCM) 10](#directional-cosine-matrix-dcm)
-
-[State Transitions 14](#state-transitions)
-
-[Pre-Training 14](#pre-training)
-
-[Training 15](#training)
-
-[Exercise 16](#exercise)
-
-[Validation 17](#validation)
-
-[Equipment 17](#equipment)
-
-[UART 17](#uart)
-
-[Logic Analyzer 17](#logic-analyzer)
-
-[Switch Performance 17](#switch-performance)
-
-[I2C Performance 18](#i2c-performance)
-
-[Protractor 19](#protractor)
-
-[Test Procedure 19](#test-procedure)
-
-[Test Results 19](#test-results)
-
-[Quantitative Analysis Test Result Summary
-21](#quantitative-analysis-test-result-summary)
-
-[Qualitative Verification 21](#qualitative-verification)
-
-[Discussion 21](#discussion)
-
-[Appendix A: I^2^C Protocol 22](#appendix-a-i2c-protocol)
-
-Abstract 
+Formpal: A Prototype Microcontroller Solution for Weighlifting Injuries 
 ========
 
 This algorithm compares a user's ideal exercise motion to any new
-motion, giving them feedback to prevent injuries that occur with bad
-form. The project uses a Texas Instruments TM4C123GXL microcontroller
+motion, giving them feedback if they've deviated from the ideal motion.
+The project uses a Texas Instruments TM4C123GXL microcontroller
 and an Invensense 9150 IMU communicating via I^2^C protocol. It is
 intuitive and simple to use, requiring motion and the TM4C's onboard
 button and RGB LEDs for communication to/from the user. It is intended
@@ -77,12 +11,16 @@ primarily for upper body exercises because they have higher prevalence
 of injury.[^1]
 
 This project was motivated by experience weight training in the gym and
-dealing with the inevitable injuries that occur. Research showed that
+dealing with the inevitable injuries that occur from it. Research showed that
 weightlifting injuries primarily occur when people are tired, because
 they lose proper exercise technique or "form".[^2] There exists a need
 for an intuitive tool to give external feedback to weightlifters when
 they are deviating from the proper form, so they can rest and avoid
-injury.
+injury. Features of exercise motion such as yaw, pitch, roll and acceleration
+can be extracted to determine whether the user is at risk or not. Testing with 
+a bench press exercise found that the device was most effective when placed 
+on the back of the hand, suggesting that this device could be combined with 
+a weightlifting glove for commercialization.
 
 System Requirements
 ===================
