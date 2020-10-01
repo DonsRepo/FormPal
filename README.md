@@ -2,22 +2,21 @@ Formpal: A Prototype Microcontroller Solution for Weighlifting Injuries
 ========
 
 This algorithm compares a user's ideal exercise motion to any new
-motion, giving them feedback if they've deviated from the ideal motion.
+motion, giving them feedback if they've deviated from it.
 The project uses a Texas Instruments TM4C123GXL microcontroller
 and an Invensense 9150 IMU communicating via I^2^C protocol. It is
-intuitive and simple to use, requiring motion and the TM4C's onboard
-button and RGB LEDs for communication to/from the user. It is intended
-primarily for upper body exercises because they have higher prevalence
+intuitive and simple to use; the only user inputs are motion + the TM4C's onboard
+button and RGB LEDs. It was evaluated primarily for upper body exercises because they have higher prevalence
 of injury.[^1]
 
 This project was motivated by experience weight training in the gym and
-dealing with the inevitable injuries that occur from it. Research showed that
+dealing with the inevitable injuries that occur from it. LIterature review and experience showed that
 weightlifting injuries primarily occur when people are tired, because
 they lose proper exercise technique or "form".[^2] There exists a need
-for an intuitive tool to give external feedback to weightlifters when
+for an intuitive tool to give external feedback to gym goers when
 they are deviating from the proper form, so they can rest and avoid
 injury. Features of exercise motion such as yaw, pitch, roll and acceleration
-can be extracted to determine whether the user is at risk or not. Testing with 
+can be extracted by a microcontroller to determine whether the user is at risk or not. Testing with 
 a bench press exercise found that the device was most effective when placed 
 on the back of the hand, suggesting that this device could be combined with 
 a weightlifting glove for commercialization.
