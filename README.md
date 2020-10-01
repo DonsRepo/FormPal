@@ -235,7 +235,7 @@ multiplication. "pfAccel" is the newest accelerometer reading and each
 referenced to a stable x, y and z coordinate system.
 
 <p align = "center">
-<img src="Images/math.jpg1">
+<img src="Images/math.jpg1" width = "500">
 </p>
 
 *Euler Angle Computation*
@@ -246,14 +246,14 @@ microcontroller and IMU sensor. The Directional Cosine Matrix is used to
 easily compute the Roll, Pitch and Yaw of the device. 
 
 <p align = "center">
-<img src="Images/Euler angles.PNG">
+<img src="Images/Euler.png" width = "600">
 </p>
 
 The following equations demonstrate how the yaw, pitch and roll are
 derived from the Directional Cosine matrix.
 
 <p align = "center">
-<img src="Images/math2.JPG">
+<img src="Images/math2.JPG" width = "300">
 </p>
 
 The following flowchart depicts the process to update the Directional
@@ -290,7 +290,7 @@ last sample
 State Transitions
 -----------------
 
-To make Formpal an intuitive tool to use, 4 states were envisioned:
+Restating the main states:
 
 -   Reset (device is polling for button press to begin)
 
@@ -299,25 +299,24 @@ To make Formpal an intuitive tool to use, 4 states were envisioned:
 
 -   Training (movement features are extracted and stored)
 
--   Exercise (new movement's features are
+-   Exercise (new movement's features are compared to trained)
 
 ### Pre-Training 
 
-To enter the pretraining mode, the flow on the left is entered by
-pressing a switch. After exiting to the while(1) loop within main(), the
-flow on the right is entered because the "training mode start flag" is
+To enter the pretraining mode, the following flow is entered by
+pressing a switch such taht the "training mode start flag" is
 set. The intent in creating a pretraining mode is that the user will
-require a brief period to move the microcontroller to the limb that is
-exercising. All that is required to transition from pretraining to
-training mode is a period of inactivity. Threshold values for activity
+require a brief period to move the microcontroller to the limb (or limb position) that for exercise. 
+All that is required to transition from pretraining to
+training mode is a brief <2s period of inactivity. Threshold values for activity
 and inactivity were experimentally set; holding the microcontroller
 still would produce small amounts of movement and rotation. Observing
 raw sensor output at the addresses contained in the various pointers
-pfAccelNet, pfEulers in debug mode helped speed this process up
+pfAccelNet, pfEulers in debug mode helped speed this calibration process up
 substantially.
 
 <p align = "center">
-<img src="Images/polling.png">
+<img src="Images/polling.PNG" width = "400">
 </p>
 
 <p align = "center">
