@@ -139,11 +139,10 @@ The software is divided up into four main parts:
 
 4.  Exercise mode which compares new movement features to the trained
     features (plus a small range of error)
-
-<img src="Images/1Modes.JPG" width="50%" height="50%">
-
-Figure - Main states for Formpal Algortithm under main() function
-while(1) loop
+<p align = "center">
+<img src="Images/1Modes.JPG" height = "500">
+Figure - Main states for Formpal Algortithm
+<p>
 
 The preceding figure shows the general structure for the algorithm. This
 general structure guided the more specific design that follows in this
@@ -161,21 +160,19 @@ TM4C microcontroller requires that GPIO Port B pints 2&3 are used to
 trigger I2C interrupts. Comparing these two pins status is the key to
 knowing when the I2C protocol is starting or stopping a message.
 
+<img src="Images/system_architecture.JPG" height = "500">
+
 Next, the weights for the Directional Cosine Matrix sensor fusion and
 the sample rate are supplied to the IMU before the while(1) loop is
 entered, which contains the main states of the FormPal algorithm.
 
-![](media/image3.png){width="1.126068460192476in"
-height="4.462121609798775in"}
-
-Figure - Start of main()
-
 ### Motion Processing Unit (MPU)
 
-![](media/image4.png){width="6.5in" height="0.7486111111111111in"}
+<p align = "center"
+<img src="Images/3MPU_Init.png" height = "500">
 
 Figure - MPU Initialization flow
-
+<p>
 Referring to the previous figure, the high-level summary of MPU
 initialization is shown. These parameters come from the constraints of
 the MPU unit and its packaging; it requires a 40MHz system clock. The
@@ -214,8 +211,7 @@ The following figure shows from right to left:
 3.  MPU9150IntHandler passes the data structure as a pointer to the I2C
     interrupt handler.
 
-![](media/image5.png){width="4.856060804899387in"
-height="3.110784120734908in"}
+<img src="Images/5InterruptHandler.png" height = "500">
 
 Figure - Functions to handle interrupt and callback for Invensense 9150
 IMU
@@ -236,11 +232,6 @@ for the buttons and LED's offer the same benefits as the register-level
 implementation (such as debouncing and allowing defined flash intervals
 in Hz). The initialization of the I/O follow the same general pattern in
 either case, as seen in the following figure.
-
-![](media/image6.png){width="1.3706977252843395in"
-height="3.7196970691163607in"}
-
-Figure - UART initialization for debugging terminal functions
 
 ![](media/image7.png){width="1.1410258092738408in"
 height="4.570658355205599in"}
