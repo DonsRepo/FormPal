@@ -164,7 +164,7 @@ the sample rate are supplied to the IMU.
 
 ### Motion Processing Unit (MPU)
 
-<p align = "center"
+<p align = "center">
 <img src="Images/3MPU_Init.png">
 <br>
 MPU Initialization flow
@@ -211,7 +211,7 @@ The following figure shows from right to left:
 3.  MPU9150IntHandler passes the data structure as a pointer to the I2C
     interrupt handler.
  
-<p align = "center"
+<p align = "center">
 <img src="Images/interrupt_handler.PNG">
 <br>
 Figure - Functions to handle interrupt and callback for Invensense 9150
@@ -235,8 +235,8 @@ implementation (such as debouncing and allowing defined flash intervals
 in Hz). The initialization of the I/O follow the same general pattern in
 either case, as seen in the following figure.
 
-<p align = "center"
-<img src="Images/portfunctioninit.PNG">
+<p align = "center">
+<img src="Images/portfunctioninit.PNG" height = "500">
 </p>
 
 Directional Cosine Matrix (DCM)
@@ -293,7 +293,7 @@ multiplication. "pfAccel" is the newest accelerometer reading and each
 "pfAccelNet" represents an axis of the corrected acceleration that is
 referenced to a stable x, y and z coordinate system.
 
-<p align = "center"
+<p align = "center">
 <img src="Images/math.jpg1">
 </p>
 
@@ -304,14 +304,14 @@ uses. Euler angles are relied upon to determine the attitude of the
 microcontroller and IMU sensor. The Directional Cosine Matrix is used to
 easily compute the Roll, Pitch and Yaw of the device. 
 
-<p align = "center"
+<p align = "center">
 <img src="Images/Euler angles.PNG">
 </p>
 
 The following equations demonstrate how the yaw, pitch and roll are
 derived from the Directional Cosine matrix.
 
-<p align = "center"
+<p align = "center">
 <img src="Images/math2.JPG">
 </p>
 
@@ -319,7 +319,7 @@ The following flowchart depicts the process to update the Directional
 Cosine Matrix, which is first seeded as an identity matrix to speed up
 convergence upon system start.
 
-<p align = "center"
+<p align = "center">
 <img src="Images/DCM.png">
 </p>
 
@@ -328,7 +328,7 @@ Figure - Directional Cosine Matrix Algorithm for Formpal
 The next figure shows how the DCM is used to provide a common frame of
 reference to the updated accelerometer data.
 
-<p align = "center"
+<p align = "center">
 <img src="Images/DCM2.png">
 </p>
 
@@ -341,7 +341,7 @@ called every time the sensor data is updated. Pointers to sensor data
 are passed to it and it returns a pointer to an array of calculated
 delta values.
 
-<p align = "center"
+<p align = "center">
 <img src="Images/sensorupdate.png">
 </p>
 
