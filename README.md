@@ -109,21 +109,6 @@ System Requirements
     a.  Thresholds for motion and rest shall take into account small
         movements present when a person thinks they are holding still.
 
-Constraints
-===========
-
-Interrupt 
----------
-
-The assignment requires that there be at least one type of interrupt. A
-periodic interrupt tied to the IMU's clock set at 50 Hz is utilized to
-update sensor readings, regardless of what the system is doing. The
-MPU's INT pin is normally high so the TM4C is configured to trigger on a
-falling edge interrupt. This is the only interrupt to that Formpal has
-to service so priority is irrelevant. Verification of this interrupt
-timing is present in the Verification section.
-
-
 Software 
 ========
 
@@ -139,8 +124,10 @@ The software is divided up into four main parts:
 
 4.  Exercise mode which compares new movement features to the trained
     features (plus a small range of error)
+    
 <p align = "center">
 <img src="Images/1Modes.JPG" height = "500">
+<br>
 Figure - Main states for Formpal Algortithm
 <p>
 
@@ -160,19 +147,29 @@ TM4C microcontroller requires that GPIO Port B pints 2&3 are used to
 trigger I2C interrupts. Comparing these two pins status is the key to
 knowing when the I2C protocol is starting or stopping a message.
 
-<img src="Images/system_architecture.JPG" height = "500">
+<p align = "center">
+<img src="Images/system_architecture.png">
+<br>
+Figure: System architecture. There is a typo, IMU interrupt pins connect to GPIO Pins 2 and 3.
+</p>
+
+<p align = "center">
+<img src="Images/hardware_init.JPG">
+<br>
+Figure: Hardware Initialiazation Flow
+</p>
 
 Next, the weights for the Directional Cosine Matrix sensor fusion and
-the sample rate are supplied to the IMU before the while(1) loop is
-entered, which contains the main states of the FormPal algorithm.
+the sample rate are supplied to the IMU.
 
 ### Motion Processing Unit (MPU)
 
 <p align = "center"
-<img src="Images/3MPU_Init.png" height = "500">
+<img src="Images/3MPU_Init.png">
+<br>
+MPU Initialization flow
+</p>
 
-Figure - MPU Initialization flow
-<p>
 Referring to the previous figure, the high-level summary of MPU
 initialization is shown. These parameters come from the constraints of
 the MPU unit and its packaging; it requires a 40MHz system clock. The
@@ -185,16 +182,19 @@ sensor output. Table one summarizes a few of these important parameters.
 The weights are recommended by the manufacturer to optimize error
 reduction during the Directional Cosine Matrix process.
 
-  **Attribute**                    **Value**
-  -------------------------------- -----------
-  MPU Sample Rate                  50Hz
-  Accelerometer Weight             0.2
-  Gyroscope Weight                 0.6
-  Magnetometer Weight              0.2
-  Accelerometer Max                2G
-  Accelerometer High Pass Filter   5Hz
+<center>
+    
+  |**Attribute**                   | **Value**  |
+  |--------------------------------| -----------|
+  |MPU Sample Rate                 | 50Hz       |
+  |Accelerometer Weight           | 0.2        |
+  |Gyroscope Weight                | 0.6        |
+  |Magnetometer Weight             | 0.2        |
+  |Accelerometer Max               | 2G         |
+  |Accelerometer High Pass Filter  | 5Hz        |
+ 
+ </center>
 
-Table - MPU Register Parameters
 
 #### MPU Interrupt Triggering & Handling
 
@@ -210,11 +210,13 @@ The following figure shows from right to left:
 
 3.  MPU9150IntHandler passes the data structure as a pointer to the I2C
     interrupt handler.
-
-<img src="Images/5InterruptHandler.png" height = "500">
-
+ 
+<p align = "center"
+<img src="Images/interrupt_handler.PNG">
+<br>
 Figure - Functions to handle interrupt and callback for Invensense 9150
 IMU
+</p>
 
 ### I/O Interface: UART, Switches and LEDs
 
@@ -233,10 +235,9 @@ implementation (such as debouncing and allowing defined flash intervals
 in Hz). The initialization of the I/O follow the same general pattern in
 either case, as seen in the following figure.
 
-![](media/image7.png){width="1.1410258092738408in"
-height="4.570658355205599in"}
-
-Figure - Initialization of input devices
+<p align = "center"
+<img src="Images/portfunctioninit.PNG">
+</p>
 
 Directional Cosine Matrix (DCM)
 -------------------------------
@@ -276,9 +277,7 @@ between two vectors. The raw sensor data is scaled by $\alpha$, $\beta$
 and $\gamma$, weights that are recommended by the 9150 data sheet to be
 optimal for accuracy in rotation estimation.
 
-$$I_{\text{new}} = \ \alpha*\widehat{\text{I\ }}\text{x\ }\text{Magnetometer}_{x,y,z\ } + \ \frac{{\beta*\text{Gyroscope}}_{x,y,z}}{T_{\text{gyro}}}$$
 
-$$K_{\text{new}} = \ \gamma*\widehat{\text{K\ }}\text{x\ }\text{Accelerometer}_{x,y,z} + \ \ \frac{{\beta*\text{Gyroscope}}_{x,y,z}}{T_{\text{gyro}}}$$
 
 The vectors $I_{\text{new}}$ and $K_{\text{new}}$ are then normalized
 and then their dot product is taken to find the amount of error.
@@ -294,45 +293,44 @@ multiplication. "pfAccel" is the newest accelerometer reading and each
 "pfAccelNet" represents an axis of the corrected acceleration that is
 referenced to a stable x, y and z coordinate system.
 
-pfAccelNetX=(myDCM\[0\]\[0\]\*pfAccel\[0\])+(myDCM\[0\]\[1\]\*pfAccel\[1\])+(myDCM\[0\]\[2\]\*pfAccel\[2\])pfAccelNetY=(myDCM\[1\]\[0\]\*pfAcce;\[0\])+(myDCM\[1\]\[1\]\*pfAccel\[1\])+(myDCM\[1\]\[2\]\*pfAccel\[2\])pfAccelNetZ=(myDCM\[2\]\[0\]\*pfAccel\[0\])+(myDCM\[2\]\[1\]\*pfAccel\[1\])+(myDCM\[2\]\[2\]\*pfAccel\[2\])
+<p align = "center"
+<img src="Images/math.jpg1">
+</p>
 
 *Euler Angle Computation*
 
 Acceleration is not the only important type of sensor data that Formpal
 uses. Euler angles are relied upon to determine the attitude of the
 microcontroller and IMU sensor. The Directional Cosine Matrix is used to
-easily compute the Roll, Pitch and Yaw of the device. The following
-figure shows what these angles
-mean[^4].![](media/image8.png){width="6.5in"
-height="2.359027777777778in"}
+easily compute the Roll, Pitch and Yaw of the device. 
 
-Figure - Euler Angles
+<p align = "center"
+<img src="Images/Euler angles.PNG">
+</p>
 
 The following equations demonstrate how the yaw, pitch and roll are
 derived from the Directional Cosine matrix.
 
-$${roll = \ \tan^{- 1}}{(DCM\left\lbrack 2,1 \right\rbrack/}(DCM\left\lbrack 2,2 \right\rbrack)$$
-
-$${pitch = \  - \sin^{- 1}}{(DCM\left\lbrack 2,0 \right\rbrack)}$$
-
-$${yaw = \ \tan^{- 1}}{(DCM\left\lbrack 1,0 \right\rbrack/DCM\left\lbrack 0,0 \right\rbrack)}$$
+<p align = "center"
+<img src="Images/math2.JPG">
+</p>
 
 The following flowchart depicts the process to update the Directional
 Cosine Matrix, which is first seeded as an identity matrix to speed up
 convergence upon system start.
 
-![](media/image9.png){width="6.5in" height="6.429861111111111in"}
+<p align = "center"
+<img src="Images/DCM.png">
+</p>
 
 Figure - Directional Cosine Matrix Algorithm for Formpal
 
 The next figure shows how the DCM is used to provide a common frame of
 reference to the updated accelerometer data.
 
-![](media/image10.png){width="3.0644324146981625in"
-height="3.0705129046369204in"}
-
-Figure - Directional Cosine Matrix math to give sensor data the correct
-reference to the device
+<p align = "center"
+<img src="Images/DCM2.png">
+</p>
 
 Now the device can calculate the change in Euler angles and Acceleration
 magnitude since the last frame. This is not just useful for extracting
@@ -343,9 +341,9 @@ called every time the sensor data is updated. Pointers to sensor data
 are passed to it and it returns a pointer to an array of calculated
 delta values.
 
-![](media/image11.png){width="2.0075765529308836in"
-height="3.5352088801399826in"}![](media/image12.png){width="1.1515157480314961in"
-height="3.2427744969378827in"}
+<p align = "center"
+<img src="Images/sensorupdate.png">
+</p>
 
 Figure - Calculating change in Euler angles and acceleration values from
 last sample
