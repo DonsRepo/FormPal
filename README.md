@@ -140,8 +140,7 @@ The software is divided up into four main parts:
 4.  Exercise mode which compares new movement features to the trained
     features (plus a small range of error)
 
-![](Images/1modes.jpg){width="1.340909886264217in"
-height="2.8047681539807523in"}
+<img src="Images/1Modes.JPG" width="50%" height="50%">
 
 Figure - Main states for Formpal Algortithm under main() function
 while(1) loop
