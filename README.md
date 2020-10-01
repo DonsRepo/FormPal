@@ -22,8 +22,11 @@ a bench press exercise found that the device was most effective when placed
 on the back of the hand, suggesting that this device could be combined with 
 a weightlifting glove for commercialization.
 
-System Requirements
-===================
+System Design
+==========
+
+Algorithm Design Requirements
+---------------
 
 1.  Responsiveness
 
@@ -47,8 +50,8 @@ System Requirements
     a.  Thresholds for motion and rest shall take into account small
         movements present when a person thinks they are holding still.
 
-Software 
-========
+Software States
+----------------
 
 The software is divided up into four main parts:
 
@@ -108,8 +111,8 @@ the sample rate are supplied to the IMU.
 MPU Initialization flow
 </p>
 
-Referring to the previous figure, the high-level summary of MPU
-initialization is shown. These parameters come from the constraints of
+High-level summary of MPU
+initialization is shown above. These parameters come from the constraints of
 the MPU unit and its packaging; it requires a 40MHz system clock. The
 booster pack and TM4C MCU layout require that microcontroller GPIO port
 D (pins 1 & 2 in this case) are used for the MPU's I^2^C serial data
@@ -150,7 +153,7 @@ The following figure shows from right to left:
     interrupt handler.
  
 <p align = "center">
-<img src="Images/interrupt_handler.PNG">
+<img src="Images/interrupt_handler.PNG" width = "600">
 <br>
 Figure - Functions to handle interrupt and callback for Invensense 9150
 IMU
@@ -261,13 +264,11 @@ convergence upon system start.
 <img src="Images/DCM.png">
 </p>
 
-Figure - Directional Cosine Matrix Algorithm for Formpal
-
 The next figure shows how the DCM is used to provide a common frame of
 reference to the updated accelerometer data.
 
 <p align = "center">
-<img src="Images/DCM2.png">
+<img src="Images/DCM2.png" width = "500">
 </p>
 
 Now the device can calculate the change in Euler angles and Acceleration
@@ -349,6 +350,7 @@ state.
 Figure - Training mode. If movement is detected, features are extracted
 and stored to compare against exercise movements
 </p>
+
 ### Exercise
 
 Exercise mode is the last state. If there is movement above the rest
