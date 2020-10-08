@@ -3,7 +3,7 @@ Formpal: A Prototype Microcontroller Solution for Weighlifting Injuries
 
 This algorithm compares a user's ideal exercise motion to any new
 motion, giving them feedback if they've deviated from it.
-The project uses a Texas Instruments TM4C123GXL microcontroller
+The project was developed using embedded C within Keil uVision. It runs on a Texas Instruments TM4C123GXL microcontroller
 and an Invensense 9150 IMU communicating via I^2^C protocol. It is
 intuitive and simple to use; the user interacts with the device through motion + the TM4C's onboard
 button and RGB LEDs. It was evaluated primarily for upper body exercises because they have higher prevalence
